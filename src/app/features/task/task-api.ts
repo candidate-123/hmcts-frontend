@@ -19,7 +19,11 @@ export class TaskApi {
     return this.http.get<Task>(`${this.taskUrl}/tasks/${id}`);
   }
 
-  createTask(task: Task) {
+  createTask(task: Task): Observable<Task> {
     return this.http.post<Task>(`${this.taskUrl}/tasks/`, task);
+  }
+
+  updateTask(id: number, task: Task): Observable<Task> {
+    return this.http.put<Task>(`${this.taskUrl}/tasks/${id}`, task);
   }
 }

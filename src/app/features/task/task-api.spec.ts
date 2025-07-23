@@ -42,10 +42,11 @@ describe('TaskApi', () => {
         expect(task).toEqual(dummyTask);
       });
 
-    const req = httpMock.expectOne('http://api.test/tasks/1');
+    const req = httpMock.expectOne('http://api.test/tasks/' + dummyTask.id);
     expect(req.request.method).toBe('GET');
     req.flush(dummyTask);
   });
+
 
   it('should create a new task and return with an id', () => {
     const newTask: Task = { title: 'Task 1' } as Task;
@@ -57,6 +58,21 @@ describe('TaskApi', () => {
     expect(req.request.method).toBe('POST');
     req.flush({ ...newTask, id: 1 });
   });
+
+  it('should update a task with properties and return updated task', () => {
+    const updatedTask: Task = { id: 1, title: 'Task 1' } as Task;
+
+    service.updateTask(updatedTask.id, updatedTask)
+      .subscribe(task => {
+        expect(task.title).toBe('UPDATED');
+      });
+
+    const req = httpMock.expectOne('http://api.test/tasks/' + updatedTask.id);
+    expect(req.request.method).toBe('PUT');
+    req.flush({ ...updatedTask, title: 'UPDATED' });
+  });
+
+
 
 
   it('should be created', () => {
