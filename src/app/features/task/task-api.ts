@@ -18,4 +18,8 @@ export class TaskApi {
   getTaskById(id: number): Observable<Task> {
     return this.http.get<Task>(`${this.taskUrl}/tasks/${id}`);
   }
+
+  createTask(task: Task) {
+    return this.http.post<Task>(`${this.taskUrl}/tasks/`, task);
+  }
 }

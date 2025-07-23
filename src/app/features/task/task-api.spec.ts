@@ -47,6 +47,16 @@ describe('TaskApi', () => {
     req.flush(dummyTask);
   });
 
+  it('should create a new task and return with an id', () => {
+    const newTask: Task = { title: 'Task 1' } as Task;
+    service.createTask(newTask)
+      .subscribe(task => {
+        expect(task.id).toBe(1);
+      });
+    const req = httpMock.expectOne('http://api.test/tasks/');
+    expect(req.request.method).toBe('POST');
+    req.flush({ ...newTask, id: 1 });
+  });
 
 
   it('should be created', () => {
