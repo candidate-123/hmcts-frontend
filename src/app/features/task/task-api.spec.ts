@@ -4,8 +4,6 @@ import { TaskApi } from './task-api';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Task } from './model/task';
 import { API_URL } from './task-api.token';
-import { environment } from '../../../environments/environment';
-import { Title } from '@angular/platform-browser';
 
 describe('TaskApi', () => {
   let service: TaskApi;
@@ -71,7 +69,7 @@ describe('TaskApi', () => {
 
     const req = httpMock.expectOne('http://api.test/tasks/' + existingTask.id);
     expect(req.request.method).toBe('PUT');
-    req.flush(updatedTask);
+    req.flush({ ...updatedTask, title: 'UPDATED' });
   });
 
   it('should delete a task passing id parameter', () => {
