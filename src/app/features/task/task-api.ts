@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Task } from './model/task';
 import { HttpClient } from '@angular/common/http';
 import { API_URL } from './task-api.token';
@@ -13,5 +13,9 @@ export class TaskApi {
 
   getTasks(): Observable<Task[]> {
     return this.http.get<Task[]>(`${this.taskUrl}/tasks`);
+  }
+
+  getTaskById(id: number): Observable<Task> {
+    return this.http.get<Task>(`${this.taskUrl}/tasks/${id}`);
   }
 }
