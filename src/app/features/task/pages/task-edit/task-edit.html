@@ -24,16 +24,11 @@
           <input required #title="ngModel" [(ngModel)]="task.title" class="govuk-input" id="title" name="title"
             type="text">
         </div>
-        <div class="govuk-form-group {{ description.invalid && form.submitted? 'govuk-form-group--error' : '' }}">
+        <div class="govuk-form-group">
           <label class="govuk-label" for="description">
             Description
           </label>
-          @if(form.submitted && description.invalid) {
-          <div class="govuk-error-message">
-            <span>Enter a description</span>
-          </div>
-          }
-          <input required #description="ngModel" [(ngModel)]="task.description" class="govuk-input" id="description"
+          <input #description="ngModel" [(ngModel)]="task.description" class="govuk-input" id="description"
             name="description" type="text">
         </div>
 
