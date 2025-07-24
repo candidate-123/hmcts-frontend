@@ -11,7 +11,13 @@ import { Task } from '../../model/task';
 describe('TaskEdit', () => {
   let component: TaskEdit;
   let fixture: ComponentFixture<TaskEdit>;
-  let mockActivatedRoute: any;
+  const mockActivatedRoute = {
+    snapshot: {
+      params: {
+        id: 1
+      }
+    }
+  };
 
   const fakeTask = { id: 1, title: 'Test Task', status: 'INCOMPLETE', dateDue: '2025-07-25' };
 
@@ -25,13 +31,7 @@ describe('TaskEdit', () => {
     navigate: jasmine.createSpy('navigate')
   };
 
-  mockActivatedRoute = {
-    snapshot: {
-      params: {
-        id: 1
-      }
-    }
-  };
+
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -173,7 +173,7 @@ describe('TaskEdit', () => {
   it('should navigate to deleteTask route with correct query params', () => {
 
     mockRouter.navigate.calls.reset();
-
+    fixture.detectChanges();
     component.deleteTask();
 
     expect(mockRouter.navigate).toHaveBeenCalledWith(
