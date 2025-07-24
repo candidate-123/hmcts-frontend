@@ -23,7 +23,7 @@ export class TaskApi {
   }
 
   createTask(task: Task): Observable<Task> {
-    return this.http.post<Task>(`${this.taskUrl}/tasks/`, task);
+    return this.http.post<Task>(`${this.taskUrl}/tasks`, task);
   }
 
   updateTask(id: number, task: Task): Observable<Task> {

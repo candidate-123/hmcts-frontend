@@ -53,7 +53,7 @@ describe('TaskApi', () => {
       .subscribe(task => {
         expect(task.id).toBe(1);
       });
-    const req = httpMock.expectOne('http://api.test/tasks/');
+    const req = httpMock.expectOne('http://api.test/tasks');
     expect(req.request.method).toBe('POST');
     req.flush({ ...newTask, id: 1 });
   });
