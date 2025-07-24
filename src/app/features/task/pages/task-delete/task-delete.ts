@@ -8,14 +8,14 @@ import { TaskApi } from '../../task-api';
   imports: [RouterModule],
   template: `
   <h1 class="govuk-heading-l">Delete {{ type }}?</h1>
-<p class="govuk-body">Are you sure you want to delete this {{ type }}? This action cannot be undone.</p>
+  <p class="govuk-body">Are you sure you want to delete this {{ type }}? This action cannot be undone.</p>
 
-<div class="govuk-button-group">
-  <button class="govuk-button govuk-button--warning" (click)="deleteTask()" [disabled]="isLoading">
-    {{ isLoading ? 'Deleting...' : 'Yes, delete' }}
-  </button>
-  <a routerLink="/{{ type }}s/{{ id }}" class="govuk-link">Cancel</a>
-</div>
+  <div class="govuk-button-group">
+    <button class="govuk-button govuk-button--warning" (click)="deleteTask()" [disabled]="isLoading">
+      {{ isLoading ? 'Deleting...' : 'Yes, delete' }}
+    </button>
+    <a routerLink="/{{ type }}s/{{ id }}" class="govuk-link">Cancel</a>
+  </div>
   `,
   styles: ``
 })
@@ -38,3 +38,4 @@ export class TaskDelete implements OnInit {
     });
   }
 }
+
