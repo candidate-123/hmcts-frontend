@@ -170,7 +170,16 @@ describe('TaskEdit', () => {
   });
 
 
+  it('should navigate to deleteTask route with correct query params', () => {
 
+    component.type = 'task';
+
+    component.deleteTask();
+
+    expect(mockRouter.navigate).toHaveBeenCalledWith(
+      ['/tasks', 1, 'deleteTask']
+    );
+  });
 
   it('should create', () => {
     expect(component).toBeTruthy();
