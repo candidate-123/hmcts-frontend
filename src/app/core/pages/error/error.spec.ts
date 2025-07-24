@@ -15,7 +15,7 @@ describe('ErrorComponent', () => {
             snapshot: {
               queryParamMap: {
                 get: (key: string) => {
-                  const queryParams: any = {
+                  const queryParams: Record<string, string> = {
                     status: '404',
                     message: 'Page not found'
                   };

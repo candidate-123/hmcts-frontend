@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { map, Observable, of } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { mapTask, Task } from './model/task';
 import { HttpClient } from '@angular/common/http';
 import { API_URL } from './task-api.token';

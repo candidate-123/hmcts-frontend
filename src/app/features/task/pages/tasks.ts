@@ -14,7 +14,7 @@ import { tap } from 'rxjs';
 })
 export class Tasks implements OnInit {
   tasks: Task[] = [];
-  isLoading: boolean = false;
+  isLoading = false;
   router = inject(Router);
 
   taskService = inject(TaskApi);

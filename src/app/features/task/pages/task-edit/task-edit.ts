@@ -13,7 +13,7 @@ import { TaskStatus } from '../../model/task-status';
   styles: ``
 })
 export class TaskEdit implements OnInit {
-  isLoading: boolean = false;
+  isLoading = false;
   task: Task = { status: TaskStatus.INCOMPLETE } as Task;
   statuses = Object.values(TaskStatus);
 
@@ -50,7 +50,10 @@ export class TaskEdit implements OnInit {
     this.isLoading = true;
     const { year, month, day } = this.task;
     const task = { ...this.task, dateDue: new Date(year!, month! - 1, day!) };
-    task.id > 0 ? this.updateTask(task) : this.createTask(task);
+    if (task.id > 0)
+      this.updateTask(task);
+    else
+      this.createTask(task);
   }
 
   createTask(task: Task) {
