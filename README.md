@@ -51,12 +51,9 @@ npm start
 
 
 ## Notes
-- [x] Will add global error handler
-- [ ] Complete TaskEdit unit tests
-- [ ] Unit test TaskDelete
-- [ ] Modify delete TaskDelete. already gets an id in route param no need to pass as queryParam 
 - [ ] Add pagination and Filtering
 - [ ] Add clear button on taskEdit form Description
+
 Research govuk style and components for use in app
-Workflow could be imporved with additional features - like generic confimation page instead of feature specific deletes etc.
+Workflow could be improved if more features are added - like generic confimation page instead of feature specific deletes etc.
 http errors will be handled globally and redirect to specific page
