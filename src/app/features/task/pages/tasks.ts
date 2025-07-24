@@ -3,11 +3,11 @@ import { Task } from '../model/task';
 import { TaskApi } from '../task-api';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, RouterModule } from '@angular/router';
-import { DatePipe, LowerCasePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-tasks',
-  imports: [RouterModule, DatePipe, LowerCasePipe],
+  imports: [RouterModule, DatePipe],
   templateUrl: './tasks.html',
   styles: ``
 })
