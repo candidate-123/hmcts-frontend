@@ -20,5 +20,8 @@ Angular 20
 govuk
 
 ## Notes
-Will add global error handler
+- [x] Will add global error handler
+- [ ] Modify delete tas. already gets an id in route param no need to pass as queryParam 
+- [ ] Add pagination and Filtering
+- [ ] Add clear button on taskEdit form Description
 Research govuk style and components for use in app
