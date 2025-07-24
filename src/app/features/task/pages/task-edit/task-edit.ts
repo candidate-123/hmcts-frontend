@@ -14,7 +14,7 @@ import { TaskStatus } from '../../model/task-status';
 })
 export class TaskEdit implements OnInit {
   isLoading: boolean = false;
-  task: Task = {} as Task;
+  task: Task = { status: TaskStatus.INCOMPLETE } as Task;
   statuses = Object.values(TaskStatus);
 
   route = inject(ActivatedRoute);
