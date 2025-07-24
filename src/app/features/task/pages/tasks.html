@@ -33,7 +33,7 @@
     @for(task of tasks; track task.id) {
     <tr data-testid="output-row" class="govuk-table__row">
       <th scope="row" class="govuk-table__header">
-        <a [routerLink]="['./', task.id]"> {{ task.title }} </a>
+        <a [routerLink]="['./', task.id, 'edit']"> {{ task.title }} </a>
       </th>
       <th scope="row" class="govuk-table__header">{{ task.dateDue | date:'mediumDate' }}</th>
       <th scope="row" class="govuk-table__header">

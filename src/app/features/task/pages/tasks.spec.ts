@@ -50,4 +50,17 @@ describe('Tasks component', () => {
     expect(myTasks.length).toBe(2);
   });
 
+
+  it('should render loading indicator', () => {
+    mockTaskApi.getTasks.and.returnValue(of(mockTasks));
+
+    fixture.componentInstance.isLoading = true;
+    fixture.detectChanges();
+
+
+    const loader = fixture.debugElement.query(By.css('div[aria-live="polite"]'));
+
+    expect(loader.nativeElement.textContent).toMatch(/loading/i);
+  });
+
 });

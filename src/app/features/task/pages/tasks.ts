@@ -4,6 +4,7 @@ import { TaskApi } from '../task-api';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, RouterModule } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-tasks',
@@ -24,13 +25,17 @@ export class Tasks implements OnInit {
   }
 
   getTasks() {
+    this.isLoading = true;
     this.taskService.getTasks()
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(
+        tap(() => this.isLoading = false),
+        takeUntilDestroyed(this.destroyRef)
+      )
       .subscribe(tasks => this.tasks = tasks);
   }
 
   createTask() {
-    this.router.navigate(['/tasks/', -1]);
+    this.router.navigate(['/tasks/', -1, '/edit']);
   }
 
 }
