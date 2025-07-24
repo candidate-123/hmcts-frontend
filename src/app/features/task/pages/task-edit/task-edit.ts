@@ -1,7 +1,6 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TaskApi } from '../../task-api';
-import { tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Task } from '../../model/task';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -71,12 +70,7 @@ export class TaskEdit implements OnInit {
   }
 
   deleteTask() {
-    this.router.navigate(['/tasks', this.task.id, 'deleteTask'], {
-      queryParams: {
-        id: this.task?.id,
-        type: this.type
-      }
-    });
+    this.router.navigate(['/tasks', this.task.id, 'deleteTask']);
   }
 
 }
