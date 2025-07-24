@@ -43,12 +43,29 @@ export class TaskEdit implements OnInit {
   }
 
   submitForm(form: NgForm) {
-    if (form.invalid) {
-      // Could scroll to error summary here but form is quite short so just return
+    const day = Number(this.task.day);
+    const month = Number(this.task.month);
+    const year = Number(this.task.year);
+
+    const date = new Date(year, month - 1, day);
+    const isValidDate =
+      !isNaN(day) && !isNaN(month) && !isNaN(year) &&
+      date.getFullYear() === year &&
+      date.getMonth() === month - 1 &&
+      date.getDate() === day;
+
+    const errorObj = isValidDate ? null : { invalidDate: true };
+
+    // Apply shared error to each field
+    form.controls['due-date-day']?.setErrors(errorObj);
+    form.controls['due-date-month']?.setErrors(errorObj);
+    form.controls['due-date-year']?.setErrors(errorObj);
+    if (form.invalid || !isValidDate) {
+
       return;
     }
     this.isLoading = true;
-    const { year, month, day } = this.task;
+
     const task = { ...this.task, dateDue: new Date(year!, month! - 1, day!) };
     if (task.id > 0)
       this.updateTask(task);
@@ -75,5 +92,23 @@ export class TaskEdit implements OnInit {
   deleteTask() {
     this.router.navigate(['/tasks', this.task.id, 'deleteTask']);
   }
+
+  isValidDate(day: number, month: number, year: number): boolean {
+    // Ensure values are integers
+    if (!Number.isInteger(day) || !Number.isInteger(month) || !Number.isInteger(year)) {
+      return false;
+    }
+
+    // Month in JavaScript Date is 0-based (0 = January)
+    const date = new Date(year, month - 1, day);
+
+    // Validate by checking if date parts match
+    return (
+      date.getFullYear() === year &&
+      date.getMonth() === month - 1 &&
+      date.getDate() === day
+    );
+  }
+
 
 }
