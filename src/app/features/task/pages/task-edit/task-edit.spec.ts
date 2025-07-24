@@ -3,7 +3,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TaskEdit } from './task-edit';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TaskApi } from '../../task-api';
-import { Task } from '../../model/task';
 import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
@@ -41,15 +40,35 @@ describe('TaskEdit', () => {
     fixture.detectChanges();
   });
 
-
   it('should not call getTaskById if id is not positive', () => {
+    // Set up the negative ID BEFORE component is created
     mockActivatedRoute.snapshot.params.id = -1;
 
-    component.getTask();
+    component = fixture.componentInstance;
+
+    // Spy reset to ensure clean call history
+    mockTaskApi.getTaskById.calls.reset();
+
+    // Trigger lifecycle
+    fixture.detectChanges();
 
     expect(mockTaskApi.getTaskById).not.toHaveBeenCalled();
-    expect(component.isLoading).toBeFalsy();
+    expect(component.isLoading).toBeFalse();
   });
+
+  it('should call getTaskById if id is positive', () => {
+    mockActivatedRoute.snapshot.params.id = 1;
+
+    fixture = TestBed.createComponent(TaskEdit);
+    component = fixture.componentInstance;
+
+    fixture.detectChanges();
+
+    expect(mockTaskApi.getTaskById).toHaveBeenCalledWith(1);
+  });
+
+
+
 
   it('should create', () => {
     expect(component).toBeTruthy();

@@ -22,7 +22,7 @@ export class TaskEdit implements OnInit {
   type = 'task';
 
   ngOnInit(): void {
-    console.log(this.route.snapshot.params);
+    this.getTask();
   }
 
   getTask(): void {
@@ -31,10 +31,12 @@ export class TaskEdit implements OnInit {
       this.isLoading = true;
       this.taskService.getTaskById(taskId)
         .pipe(
-          tap(() => this.isLoading = false),
           takeUntilDestroyed(this.destroyRef)
         )
-        .subscribe(task => this.task = task);
+        .subscribe(task => {
+          this.task = task;
+          this.isLoading = false;
+        });
     }
   }
 
