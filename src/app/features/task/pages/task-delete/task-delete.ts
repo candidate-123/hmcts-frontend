@@ -29,14 +29,12 @@ export class TaskDelete implements OnInit {
   route = inject(ActivatedRoute);
 
   ngOnInit(): void {
-    const qp = this.route.snapshot.queryParamMap;
-    this.id = +qp.get('id')!;
+    this.id = this.route.snapshot.params['id'];
   }
 
   deleteTask() {
     this.taskService.deleteTask(this.id).subscribe({
       next: () => this.router.navigate([`/${this.type.toLowerCase()}s`]),
-
     });
   }
 }
