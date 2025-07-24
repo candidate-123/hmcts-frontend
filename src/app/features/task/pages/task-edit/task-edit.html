@@ -28,8 +28,9 @@
           <label class="govuk-label" for="description">
             Description
           </label>
-          <input #description="ngModel" [(ngModel)]="task.description" class="govuk-input" id="description"
-            name="description" type="text">
+          <textarea name="description" #description="ngModel" [(ngModel)]="task.description" class="govuk-textarea"
+            id="description" name="description" rows="5"></textarea>
+
         </div>
 
         <div class="govuk-form-group">
