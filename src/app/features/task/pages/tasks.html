@@ -1,5 +1,48 @@
-<ul>
-  @for(task of tasks; track task.id) {
-  <li>{{ task.title }}</li>
-  }
-</ul>
+@if(isLoading) {
+<div class="govuk-loader-container">
+  <div class="govuk-visually-hidden" role="status" aria-live="polite">
+    Loading, please wait...
+  </div>
+  <div class="govuk-loader" aria-hidden="true"></div>
+</div>
+} @else {
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+    <h2 class="govuk-heading-l">Tasks</h2>
+  </div>
+  <div class="govuk-grid-column-one-half">
+    <div style="display: flex; justify-content: end;">
+      <button (click)="createTask()" type="button" class="govuk-button" data-module="govuk-button">
+        Create Task
+      </button>
+    </div>
+  </div>
+</div>
+<table class="govuk-table">
+  <caption class="govuk-table__caption govuk-table__caption--m govuk-!-font-weight-bold">
+    List of tasks
+  </caption>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Title</th>
+      <th scope="col" class="govuk-table__header">Due Date</th>
+      <th scope="col" class="govuk-table__header">Status</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    @for(task of tasks; track task.id) {
+    <tr data-testid="output-row" class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">
+        <a [routerLink]="['./', task.id]"> {{ task.title }} </a>
+      </th>
+      <th scope="row" class="govuk-table__header">{{ task.dateDue | date:'mediumDate' }}</th>
+      <th scope="row" class="govuk-table__header">
+        <strong class="govuk-tag govuk-tag--{{ task.status === 'INCOMPLETE'?  'blue' : 'green' }} govuk-body-s">
+          {{ task.status }}
+        </strong>
+      </th>
+    </tr>
+    }
+  </tbody>
+</table>
+}

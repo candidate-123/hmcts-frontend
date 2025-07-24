@@ -2,15 +2,19 @@ import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { Task } from '../model/task';
 import { TaskApi } from '../task-api';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Router, RouterModule } from '@angular/router';
+import { DatePipe, LowerCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-tasks',
-  imports: [],
+  imports: [RouterModule, DatePipe, LowerCasePipe],
   templateUrl: './tasks.html',
   styles: ``
 })
 export class Tasks implements OnInit {
   tasks: Task[] = [];
+  isLoading: boolean = false;
+  router = inject(Router);
 
   taskService = inject(TaskApi);
   destroyRef = inject(DestroyRef);
@@ -25,5 +29,8 @@ export class Tasks implements OnInit {
       .subscribe(tasks => this.tasks = tasks);
   }
 
+  createTask() {
+    this.router.navigate(['/tasks/', -1]);
+  }
 
 }
