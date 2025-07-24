@@ -17,7 +17,8 @@ describe('TaskEdit', () => {
 
   const mockTaskApi = {
     getTaskById: jasmine.createSpy('getTaskById').and.returnValue(of(fakeTask)),
-    createTask: jasmine.createSpy()
+    createTask: jasmine.createSpy(),
+    updateTask: jasmine.createSpy()
   };
 
   const mockRouter = {
@@ -88,6 +89,23 @@ describe('TaskEdit', () => {
     expect(component.isLoading).toBeFalse();
   });
 
+  it('should call updateTask with correct params and navigate to root on success', () => {
+    const updatedTask = { id: 1, title: 'Updated Task', status: 'INCOMPLETE', dateDue: new Date('2025-07-25') };
+
+    mockTaskApi.updateTask = jasmine.createSpy().and.returnValue(of(null));
+    mockRouter.navigate.calls.reset();
+
+    // Optional: simulate loading state
+    component.task = updatedTask;
+    component.isLoading = true;
+
+    component.updateTask(updatedTask);
+
+    expect(mockTaskApi.updateTask).toHaveBeenCalledWith(1, updatedTask);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/']);
+    expect(component.isLoading).toBeFalse();
+  });
+
   it('should call createTask with constructed date if form is valid and id is 0', () => {
     const fakeForm = { invalid: false } as NgForm;
 
@@ -150,6 +168,8 @@ describe('TaskEdit', () => {
     expect(component.isLoading).toBeFalse();
 
   });
+
+
 
 
   it('should create', () => {
