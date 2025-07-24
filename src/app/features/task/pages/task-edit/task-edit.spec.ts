@@ -4,7 +4,7 @@ import { TaskEdit } from './task-edit';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TaskApi } from '../../task-api';
 import { of } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 describe('TaskEdit', () => {
   let component: TaskEdit;
@@ -14,7 +14,12 @@ describe('TaskEdit', () => {
   const fakeTask = { id: 1, title: 'Test Task', status: 'INCOMPLETE', dateDue: '2025-07-25' };
 
   const mockTaskApi = {
-    getTaskById: jasmine.createSpy('getTaskById').and.returnValue(of(fakeTask))
+    getTaskById: jasmine.createSpy('getTaskById').and.returnValue(of(fakeTask)),
+    createTask: jasmine.createSpy()
+  };
+
+  const mockRouter = {
+    navigate: jasmine.createSpy('navigate')
   };
 
   mockActivatedRoute = {
@@ -30,7 +35,8 @@ describe('TaskEdit', () => {
       imports: [TaskEdit, RouterTestingModule.withRoutes([])],
       providers: [
         { provide: TaskApi, useValue: mockTaskApi },
-        { provide: ActivatedRoute, useValue: mockActivatedRoute }
+        { provide: ActivatedRoute, useValue: mockActivatedRoute },
+        { provide: Router, useValue: mockRouter }
       ]
     })
       .compileComponents();
@@ -67,7 +73,18 @@ describe('TaskEdit', () => {
     expect(mockTaskApi.getTaskById).toHaveBeenCalledWith(1);
   });
 
+  it('should call createTask and navigate to root on success', () => {
+    const mockTask = { id: 1, title: 'New Task', status: 'INCOMPLETE', dateDue: new Date('2025-07-25') };
 
+
+    mockTaskApi.createTask = jasmine.createSpy().and.returnValue(of(null));
+
+    component.createTask(mockTask);
+
+    expect(mockTaskApi.createTask).toHaveBeenCalledWith(mockTask);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/']);
+    expect(component.isLoading).toBeFalse();
+  });
 
 
   it('should create', () => {
