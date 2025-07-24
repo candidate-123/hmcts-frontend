@@ -1,1 +1,113 @@
-<p>task-edit works!</p>
+@if(isLoading) {
+<div class="govuk-loader-container">
+  <div class="govuk-visually-hidden" role="status" aria-live="polite">
+    Loading, please wait...
+  </div>
+  <div class="govuk-loader" aria-hidden="true"></div>
+</div>
+
+} @else {
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <form #form="ngForm" (ngSubmit)="submitForm(form)">
+      <div class="govuk-form-group">
+        <div
+          class="govuk-form-group govuk-form-group {{ title.invalid && form.submitted? 'govuk-form-group--error' : '' }}">
+          <label class="govuk-label" for="title">
+            Title
+          </label>
+          @if(form.submitted && title.invalid) {
+          <div class="govuk-error-message">
+            <span>Enter a title</span>
+          </div>
+          }
+          <input required #title="ngModel" [(ngModel)]="task.title" class="govuk-input" id="title" name="title"
+            type="text">
+        </div>
+        <div class="govuk-form-group {{ description.invalid && form.submitted? 'govuk-form-group--error' : '' }}">
+          <label class="govuk-label" for="description">
+            Description
+          </label>
+          @if(form.submitted && description.invalid) {
+          <div class="govuk-error-message">
+            <span>Enter a description</span>
+          </div>
+          }
+          <input required #description="ngModel" [(ngModel)]="task.description" class="govuk-input" id="description"
+            name="description" type="text">
+        </div>
+
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="status">
+            Status
+          </label>
+          <select [(ngModel)]="task.status" class="govuk-select" id="status" name="status">
+            @for (status of statuses; track status) {
+            <option [value]="status">{{ status }}</option>
+            }
+          </select>
+        </div>
+        <div
+          class="{{ (day.invalid || month.invalid || year.invalid) && form.submitted? 'govuk-form-group--error' : '' }}">
+          <label class="govuk-label govuk-date-input__label" for="due-date-day">
+            Due Date
+          </label>
+          @if(form.submitted && (day.invalid || month.invalid || year.invalid)) {
+          <div class="govuk-error-message">
+            <span>Enter a valid date</span>
+          </div>
+          }
+          <div id="due-date-hint" class="govuk-hint">
+            For example, 27 3 2007
+          </div>
+          <div class="govuk-date-input" id="due-date">
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="due-date-day">
+                  Day
+                </label>
+                <input required #day="ngModel" class="govuk-input govuk-date-input__input govuk-input--width-2"
+                  id="due-date-day" name="due-date-day" type="text" [(ngModel)]="task.day" inputmode="numeric">
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="due-date-month">
+                  Month
+                </label>
+                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="due-date-month"
+                  name="due-date-month" required #month="ngModel" [(ngModel)]="task.month" type="text"
+                  inputmode="numeric">
+              </div>
+            </div>
+            <div class="govuk-date-input__item">
+              <div class="govuk-form-group">
+                <label class="govuk-label govuk-date-input__label" for="due-date-year">
+                  Year
+                </label>
+                <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="due-date-year"
+                  name="due-date-year" required #year="ngModel" [(ngModel)]="task.year" type="text" inputmode="numeric">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      @if(task.id) {
+      <div class="govuk-button-group">
+        <button [disabled]="!form.dirty" type="submit" class="govuk-button" data-module="govuk-button">
+          Save and continue
+        </button>
+        <button (click)="deleteTask()" type="button" class="govuk-button govuk-button--warning"
+          data-module="govuk-button">
+          Delete Task
+        </button>
+      </div>
+      } @else {
+      <button type="submit" class="govuk-button" data-module="govuk-button">
+        Create Task
+      </button>
+      }
+    </form>
+  </div>
+</div>
+}
