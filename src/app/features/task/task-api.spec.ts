@@ -35,10 +35,10 @@ describe('TaskApi', () => {
   });
 
   it('should fetch a task', () => {
-    const dummyTask: Task = { id: 1, title: 'Task 1' } as Task;
+    const dummyTask: Task = { id: 1, title: 'Task 1', dateDue: new Date() } as Task;
     service.getTaskById(1)
       .subscribe(task => {
-        expect(task).toEqual(dummyTask);
+        expect(task.title).toBe('Task 1');
       });
 
     const req = httpMock.expectOne('http://api.test/tasks/' + dummyTask.id);

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { Task } from './model/task';
+import { map, Observable, of } from 'rxjs';
+import { mapTask, Task } from './model/task';
 import { HttpClient } from '@angular/common/http';
 import { API_URL } from './task-api.token';
 
@@ -16,7 +16,10 @@ export class TaskApi {
   }
 
   getTaskById(id: number): Observable<Task> {
-    return this.http.get<Task>(`${this.taskUrl}/tasks/${id}`);
+    return this.http.get<Task>(`${this.taskUrl}/tasks/${id}`)
+      .pipe(
+        map(task => mapTask(task))
+      );
   }
 
   createTask(task: Task): Observable<Task> {
