@@ -4,20 +4,51 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 
 Angular project to consume HMCTS case management Java Springboot backend.
 
-## Development server
-
-To start a local development server, run:
-
-```bash
-ng serve
-```
-
-## Dependencies
 
 ## Installation
+
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/candidate-123/hmcts-frontend.git
+   cd hmcts-frontend
+   ```
+2. **Install Dependencies**:
+   ```bash
+   npm install
+   ```
+
+## Dependencies
 node: >22
 Angular 20
 govuk
+
+## Usage
+
+### Running
+To start the project
+```bash
+npm start
+```
+
+### Available Scripts
+- **Start**: Run.
+  ```bash
+  ng serve
+  ```
+- **Lint**: Check for code style issues.
+  ```bash
+  npm run lint
+  ```
+- **Test**: Run unit tests.
+  ```bash
+  npm test
+  ```
+- **Build**: Build for production.
+  ```bash
+  ng build
+  ```
+
+
 
 ## Notes
 - [x] Will add global error handler
