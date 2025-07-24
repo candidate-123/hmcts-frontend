@@ -28,3 +28,4 @@ govuk
 - [ ] Add clear button on taskEdit form Description
 Research govuk style and components for use in app
 Workflow could be imporved with additional features - like generic confimation page instead of feature specific deletes etc.
+http errors will be handled globally and redirect to specific page
