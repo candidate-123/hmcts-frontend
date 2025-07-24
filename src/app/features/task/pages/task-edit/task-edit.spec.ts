@@ -5,6 +5,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { TaskApi } from '../../task-api';
 import { of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
+import { Task } from '../../model/task';
 
 describe('TaskEdit', () => {
   let component: TaskEdit;
@@ -25,7 +27,7 @@ describe('TaskEdit', () => {
   mockActivatedRoute = {
     snapshot: {
       params: {
-        id: 42
+        id: 1
       }
     }
   };
@@ -84,6 +86,69 @@ describe('TaskEdit', () => {
     expect(mockTaskApi.createTask).toHaveBeenCalledWith(mockTask);
     expect(mockRouter.navigate).toHaveBeenCalledWith(['/']);
     expect(component.isLoading).toBeFalse();
+  });
+
+  it('should call createTask with constructed date if form is valid and id is 0', () => {
+    const fakeForm = { invalid: false } as NgForm;
+
+    const createTaskSpy = spyOn(component, 'createTask');
+    const updateTaskSpy = spyOn(component, 'updateTask');
+
+    component.task = {
+      id: 0,
+      title: 'My Task',
+      status: 'INCOMPLETE',
+      year: 2025,
+      month: 7,
+      day: 24
+    } as Task;
+
+    component.submitForm(fakeForm);
+
+    expect(component.isLoading).toBeTrue();
+    expect(createTaskSpy).toHaveBeenCalledWith(jasmine.objectContaining({
+      id: 0,
+      dateDue: new Date(2025, 6, 24) // month - 1
+    }));
+    expect(updateTaskSpy).not.toHaveBeenCalled();
+  });
+
+  it('should call updateTask if id > 0 and form is valid', () => {
+    const fakeForm = { invalid: false } as NgForm;
+
+    const createTaskSpy = spyOn(component, 'createTask');
+    const updateTaskSpy = spyOn(component, 'updateTask');
+
+    component.task = {
+      id: 99,
+      title: 'Update Me',
+      status: 'COMPLETE',
+      year: 2025,
+      month: 8,
+      day: 1
+    } as Task;
+
+    component.submitForm(fakeForm);
+
+    expect(updateTaskSpy).toHaveBeenCalledWith(jasmine.objectContaining({
+      id: 99,
+      dateDue: new Date(2025, 7, 1)
+    }));
+    expect(createTaskSpy).not.toHaveBeenCalled();
+  });
+
+  it('should return early if form is invalid', () => {
+    const fakeForm = { invalid: true } as NgForm;
+
+    const createTaskSpy = spyOn(component, 'createTask');
+    const updateTaskSpy = spyOn(component, 'updateTask');
+
+    component.submitForm(fakeForm);
+
+    expect(createTaskSpy).not.toHaveBeenCalled();
+    expect(updateTaskSpy).not.toHaveBeenCalled();
+    expect(component.isLoading).toBeFalse();
+
   });
 
 
