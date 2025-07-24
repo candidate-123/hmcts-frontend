@@ -71,7 +71,7 @@ export class TaskEdit implements OnInit {
   }
 
   deleteTask() {
-    this.router.navigate(['/tasks/deleteTask'], {
+    this.router.navigate(['/tasks', this.task.id, 'deleteTask'], {
       queryParams: {
         id: this.task?.id,
         type: this.type
