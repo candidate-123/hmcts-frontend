@@ -35,7 +35,7 @@ export class Tasks implements OnInit {
   }
 
   createTask() {
-    this.router.navigate(['/tasks/', -1, '/edit']);
+    this.router.navigate(['/tasks/', -1, 'edit']);
   }
 
 }
